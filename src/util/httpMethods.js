@@ -1,13 +1,11 @@
 /**
- * Makes a GET fetch request of a given endpoint with the token provided.
+ * Makes a GET fetch request of a given endpoint.
  * @param {*} endpoint - the endpoint to be accessed
- * @param {*} token - a JWT to be appended to the headers.
  * @returns - the response from the API.
  * @throws - An error if the fetch request failed
  */
- const getFromAPI = async (endpoint, token) => {
+ const getFromAPI = async (endpoint) => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const requestOptions = {
         method: 'GET',
@@ -28,16 +26,14 @@
 }
 
 /**
- * Makes a POST fetch request of a given endpoint with the token provided.
+ * Makes a POST fetch request of a given endpoint.
  * @param {*} data - JSON data to be placed in the body
  * @param {*} endpoint - the endpoint to be accessed
- * @param {*} token - a JWT to be appended to the headers
  * @returns - the response from the API.
  * @throws - An error if the fetch request failed
  */
-const postToAPI = async (data, endpoint, token) => {
+const postToAPI = async (data, endpoint) => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/json");
 
     const requestOptions = {
@@ -59,16 +55,14 @@ const postToAPI = async (data, endpoint, token) => {
 }
 
 /**
- * Makes a PUT fetch request of a given endpoint with the token provided.
+ * Makes a PUT fetch request of a given endpoint.
  * @param {*} data - JSON data to be placed in the body
  * @param {*} endpoint - the endpoint to be accessed
- * @param {*} token - a JWT to be appended to the headers
  * @returns - the response from the API.
  * @throws - An error if the fetch request failed
  */
-const updateToAPI = (data, endpoint, token) => {
+const updateToAPI = (data, endpoint) => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/json");
 
     const requestOptions = {
@@ -90,15 +84,13 @@ const updateToAPI = (data, endpoint, token) => {
 }
 
 /**
- * Makes a DELETE fetch request of a given endpoint with the token provided.
+ * Makes a DELETE fetch request of a given endpoint.
  * @param {*} endpoint - the endpoint to be accessed
- * @param {*} token - a JWT to be appended to the headers.
  * @returns - the response from the API.
  * @throws - An error if the fetch request failed
  */
-const deleteFromAPI = (endpoint, token) => {
+const deleteFromAPI = (endpoint) => {
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
 
     const requestOptions = {
         method: 'DELETE',
