@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
+import EncounterList from "../encounterList/EncounterList";
 
 const PatientDetails = (props) => {
 
@@ -17,7 +18,6 @@ const PatientDetails = (props) => {
                 console.log(error);
             });
     }, [param.id]);
-
     return (
         <div>
         <p>Patient ID: {patient.id}</p>
@@ -34,6 +34,7 @@ const PatientDetails = (props) => {
         <p>Weight: {patient.weight}</p>
         <p>Insurance: {patient.insurance}</p>
         <p>Gender: {patient.gender}</p>
+        <EncounterList patientId={param.id} />
         <Link to="edit">Edit Patient Details</Link>
         <Link to="/">Back to Patient List</Link>
         </div>
