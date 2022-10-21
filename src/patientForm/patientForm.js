@@ -5,7 +5,7 @@ const PatientForm = (props) => {
 
     const param = useParams();
 
-    return(<p>Patient Form. Patient ID = {param.id}. Currently in {mode} mode.</p>)
+    return(<p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>);
 }
 
 export default PatientForm;
