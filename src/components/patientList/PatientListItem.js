@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { CONTEXT_PATIENTS } from "../../util/constants";
+
 const PatientListItem = (props) => {
 
     const { patient } = props;
@@ -7,7 +10,7 @@ const PatientListItem = (props) => {
             <td>{patient.firstName} {patient.lastName}</td>
             <td>{patient.age}</td>
             <td>{patient.gender}</td>
-            <td><button>View Details</button></td>
+            <td><Link to={`${CONTEXT_PATIENTS}/${patient.id}`}><button>View Details</button></Link></td>
             <td><button>Delete</button></td>
         </tr>
     );
