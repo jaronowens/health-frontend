@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
 import PatientListItem from "./PatientListItem";
+import { Link } from "react-router-dom";
 
 const PatientList = (props) => {
 
@@ -33,7 +34,7 @@ const PatientList = (props) => {
                     {patients.map(patient => <PatientListItem key={patient.id} patient={patient} />)}
                 </tbody>
             </table>
-            <button>Create Patient</button>
+            <Link to={`${CONTEXT_PATIENTS}/create`}><button>Create Patient</button></Link>
         </div>
     );
 }

@@ -34,6 +34,7 @@ const PatientDetails = (props) => {
         <p>Weight: {patient.weight}</p>
         <p>Insurance: {patient.insurance}</p>
         <p>Gender: {patient.gender}</p>
+        <Link to="edit">Edit Patient Details</Link>
         <Link to="/">Back to Patient List</Link>
         </div>
     );
