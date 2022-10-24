@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import PatientForm from '../../patientForm/patientForm';
+import PatientForm from '../patientForm/PatientForm';
 import { CONTEXT_ENCOUNTERS, CONTEXT_PATIENTS } from '../../util/constants';
 import EncounterDetails from '../encounterDetails/encounterDetails';
 import EncounterForm from '../encounterForm/EncounterForm';

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getFromAPI, postToAPI, updateToAPI } from "../util/httpMethods";
-import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
-import Input from "../components/input/Input";
-import Submit from "../components/submit/Submit";
+import { getFromAPI, postToAPI, updateToAPI } from "../../util/httpMethods";
+import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
+import Input from "../input/Input";
+import Submit from "../submit/Submit";
 import {
     skipField, isNotBlank, isValidEmail, isValidName,
     isValidSsn, isValidState, isValidZip, isPositive,
     isInteger, isValidGender
-} from "../util/validation";
+} from "../../util/validation";
 
 const PatientForm = (props) => {
     const { mode } = props;
