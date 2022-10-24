@@ -8,9 +8,8 @@ const PatientForm = (props) => {
     const { mode } = props;
 
     const param = useParams();
-    const [patient, setPatient] = useState({});
 
-    const defaultState = { value: '', error: 'false', errorMsg: '' };
+    const defaultState = { value: '', error: false, errorMsg: '' };
 
     // and now it is time for a million useState hooks
     const [firstName, setFirstName] = useState({ ...defaultState });
@@ -32,11 +31,27 @@ const PatientForm = (props) => {
         stateHook({ ...object, value: event.target.value, error: false, message: '' });
     }
 
+    const loadFields = (data) => {
+        setFirstName({...firstName, value: data.firstName});
+        setLastName({...lastName, value: data.lastName});
+        setSsn({...ssn, value: data.ssn});
+        setEmail({...email, value: data.email});
+        setStreet({...street, value: data.street});
+        setCity({...city, value: data.city});
+        setState({...state, value: data.state});
+        setPostal({...postal, value: data.postal});
+        setAge({...age, value: data.age});
+        setHeight({...height, value: data.height});
+        setWeight({...weight, value: data.weight});
+        setInsurance({...insurance, value: data.insurance});
+        setGender({...gender, value: data.gender});
+    }
+
     useEffect(() => {
         if (mode === 'edit') {
             getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
                 .then((data) => {
-                    setPatient(data);
+                    loadFields(data);
                 })
                 .catch(error => {
                     console.log(error);
