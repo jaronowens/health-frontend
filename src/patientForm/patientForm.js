@@ -4,6 +4,7 @@ import { getFromAPI, postToAPI, updateToAPI } from "../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
 import Input from "../components/input/Input";
 import Submit from "../components/submit/Submit";
+import { isNotBlank, isValidName } from "../util/validation";
 
 const PatientForm = (props) => {
     const { mode } = props;
@@ -59,11 +60,29 @@ const PatientForm = (props) => {
                     console.log(error);
                 });
         }
-    }, [param.id, mode]);
+    }, [param.id, mode]); // eslint-disable-line
+
+    const setError = (field, hook, message) => {
+        hook({...field, error: true, errorMsg: message});
+    }
+    
+    const validateForm = () => {
+        let isValid = true;
+        if (isNotBlank(firstName.value)) {
+            if(!isValidName(firstName.value)) {
+                isValid = false;
+                setError(firstName, setFirstName, 'First Name contains invalid characters');
+            }
+        } else {
+            isValid = false;
+            setError(firstName, setFirstName, 'First Name cannot be blank');
+        }
+        return isValid;
+    }
 
     const submitForm = (event) => {
         event.preventDefault();
-        if (true) {
+        if (validateForm()) {
             let form = {
                 firstName: firstName.value,
                 lastName: lastName.value,
