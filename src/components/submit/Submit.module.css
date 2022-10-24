@@ -1,0 +1,14 @@
+.submit {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.submit:hover {
+    opacity: 1;
+}

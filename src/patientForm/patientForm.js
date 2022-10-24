@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getFromAPI } from "../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
 import Input from "../components/input/Input";
+import Submit from "../components/submit/Submit";
 
 const PatientForm = (props) => {
     const { mode } = props;
@@ -59,6 +60,8 @@ const PatientForm = (props) => {
         }
     }, [param.id, mode]);
 
+    const submitLabel = mode === 'edit' ? 'Edit' : 'Create';
+
     return (
         <div>
             <p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
@@ -76,6 +79,7 @@ const PatientForm = (props) => {
                 <Input type='number' label="Weight:" obj={weight} onChange={e => handleChange(e, weight, setWeight)} />
                 <Input type='text' label="Insurance:" obj={insurance} onChange={e => handleChange(e, insurance, setInsurance)} />
                 <Input type='text' label="Gender:" obj={gender} onChange={e => handleChange(e, gender, setGender)} />
+                <Submit name={submitLabel} value={submitLabel} />
             </form>
         </div>
     );
