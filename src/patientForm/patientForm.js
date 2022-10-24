@@ -4,7 +4,11 @@ import { getFromAPI, postToAPI, updateToAPI } from "../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
 import Input from "../components/input/Input";
 import Submit from "../components/submit/Submit";
-import { isNotBlank, isValidName } from "../util/validation";
+import {
+    skipField, isNotBlank, isValidEmail, isValidName,
+    isValidSsn, isValidState, isValidZip, isPositive,
+    isInteger, isValidGender
+} from "../util/validation";
 
 const PatientForm = (props) => {
     const { mode } = props;
@@ -34,20 +38,37 @@ const PatientForm = (props) => {
         stateHook({ ...object, value: event.target.value, error: false, message: '' });
     }
 
+    const setError = (field, hook, message) => {
+        hook({ ...field, error: true, errorMsg: message });
+    }
+
+    const checkRequiredField = (field, hook, check, isValid, errorMsg) => {
+        if (isNotBlank(field.value)) {
+            if (!check(field.value)) {
+                setError(field, hook, errorMsg);
+                return false;
+            }
+        } else {
+            setError(field, hook, 'Field cannot be blank');
+            return false;
+        }
+        return isValid;
+    }
+
     const loadFields = (data) => {
-        setFirstName({...firstName, value: data.firstName});
-        setLastName({...lastName, value: data.lastName});
-        setSsn({...ssn, value: data.ssn});
-        setEmail({...email, value: data.email});
-        setStreet({...street, value: data.street});
-        setCity({...city, value: data.city});
-        setState({...state, value: data.state});
-        setPostal({...postal, value: data.postal});
-        setAge({...age, value: data.age});
-        setHeight({...height, value: data.height});
-        setWeight({...weight, value: data.weight});
-        setInsurance({...insurance, value: data.insurance});
-        setGender({...gender, value: data.gender});
+        setFirstName({ ...firstName, value: data.firstName });
+        setLastName({ ...lastName, value: data.lastName });
+        setSsn({ ...ssn, value: data.ssn });
+        setEmail({ ...email, value: data.email });
+        setStreet({ ...street, value: data.street });
+        setCity({ ...city, value: data.city });
+        setState({ ...state, value: data.state });
+        setPostal({ ...postal, value: data.postal });
+        setAge({ ...age, value: data.age });
+        setHeight({ ...height, value: data.height });
+        setWeight({ ...weight, value: data.weight });
+        setInsurance({ ...insurance, value: data.insurance });
+        setGender({ ...gender, value: data.gender });
     }
 
     useEffect(() => {
@@ -62,21 +83,26 @@ const PatientForm = (props) => {
         }
     }, [param.id, mode]); // eslint-disable-line
 
-    const setError = (field, hook, message) => {
-        hook({...field, error: true, errorMsg: message});
-    }
-    
     const validateForm = () => {
         let isValid = true;
-        if (isNotBlank(firstName.value)) {
-            if(!isValidName(firstName.value)) {
-                isValid = false;
-                setError(firstName, setFirstName, 'First Name contains invalid characters');
-            }
-        } else {
-            isValid = false;
-            setError(firstName, setFirstName, 'First Name cannot be blank');
-        }
+
+        isValid = checkRequiredField(firstName, setFirstName, isValidName, isValid, 'First Name contains invalid characters');
+        isValid = checkRequiredField(lastName, setLastName, isValidName, isValid, 'Last Name contains invalid characters');
+        isValid = checkRequiredField(ssn, setSsn, isValidSsn, isValid, 'SSN must be in format XXX-XX-XXXX and cannot begin with 900-999');
+        isValid = checkRequiredField(email, setEmail, isValidEmail, isValid, 'Must be a valid email');
+        isValid = checkRequiredField(street, setStreet, skipField, isValid, '');
+        isValid = checkRequiredField(city, setCity, skipField, isValid, '');
+        isValid = checkRequiredField(state, setState, isValidState, isValid, 'Must be one of the 50 US states');
+        isValid = checkRequiredField(postal, setPostal, isValidZip, isValid, 'Zip code must have the format XXXXX or XXXXX-XXXX');
+        isValid = checkRequiredField(age, setAge, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(age, setAge, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(height, setHeight, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(height, setHeight, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(weight, setWeight, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(weight, setWeight, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(insurance, setInsurance, skipField, isValid, '');
+        isValid = checkRequiredField(gender, setGender, isValidGender, isValid, 'Valid genders are "Male", "Female", or "Other"');
+
         return isValid;
     }
 

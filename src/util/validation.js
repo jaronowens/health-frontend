@@ -8,6 +8,22 @@ export const isValidName = (name) => {
     return /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(name);
 }
 
+export const isValidSsn = (ssn) => {
+    return /^(?!0{3})(?!6{3})[0-8]\d{2}-(?!0{2})\d{2}-(?!0{4})\d{4}$/.test(ssn);
+}
+
+export const isValidState = (state) => {
+    return /^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$/.test(state);
+}
+
+export const isValidZip = (zip) => {
+    return /^\d{5}(-\d{4})?$/.test(zip);
+}
+
+export const isValidGender = (gender) => {
+    return (gender === 'Male' || gender === 'Female' || gender === 'Other');
+}
+
 /**
  * tests if a string is a valid email (x@x.x)
  * @param {string} email 
@@ -51,4 +67,8 @@ export const isInteger = (number) => {
  */
 export const isThreeCharacters = (value) => {
     return /^.{3,}$/.test(value)
+}
+
+export const skipField = (value) => {
+    return true;
 }
