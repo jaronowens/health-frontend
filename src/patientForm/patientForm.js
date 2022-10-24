@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getFromAPI } from "../util/httpMethods";
+import { useParams, useNavigate } from "react-router-dom";
+import { getFromAPI, postToAPI, updateToAPI } from "../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
 import Input from "../components/input/Input";
 import Submit from "../components/submit/Submit";
@@ -9,6 +9,7 @@ const PatientForm = (props) => {
     const { mode } = props;
 
     const param = useParams();
+    const navigate = useNavigate();
 
     const defaultState = { value: '', error: false, errorMsg: '' };
 
@@ -60,12 +61,60 @@ const PatientForm = (props) => {
         }
     }, [param.id, mode]);
 
+    const submitForm = (event) => {
+        event.preventDefault();
+        if (true) {
+            let form = {
+                firstName: firstName.value,
+                lastName: lastName.value,
+                ssn: ssn.value,
+                email: email.value,
+                street: street.value,
+                city: city.value,
+                state: state.value,
+                postal: postal.value,
+                age: age.value,
+                height: height.value,
+                weight: weight.value,
+                insurance: insurance.value,
+                gender: gender.value
+            };
+            switch (mode) {
+                case 'edit':
+                    form = { ...form, id: param.id };
+                    updateToAPI(form, (BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
+                        .then((response) => {
+                            if (response.ok) {
+                                navigate('..' + CONTEXT_PATIENTS + '/' + param.id);
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    break;
+                case 'create':
+                    postToAPI(form, (BASE_URL + CONTEXT_PATIENTS))
+                        .then((response) => {
+                            if (response.ok) {
+                                navigate('/');
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     const submitLabel = mode === 'edit' ? 'Edit' : 'Create';
 
     return (
         <div>
             <p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
-            <form>
+            <form onSubmit={submitForm}>
                 <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
                 <Input type='text' label="Last Name:" obj={lastName} onChange={e => handleChange(e, lastName, setLastName)} />
                 <Input type='text' label="SSN:" obj={ssn} onChange={e => handleChange(e, ssn, setSsn)} />
