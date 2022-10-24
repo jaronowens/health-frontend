@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getFromAPI } from "../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../util/constants";
+import Input from "../components/input/Input";
 
 const PatientForm = (props) => {
     const { mode } = props;
@@ -46,6 +47,7 @@ const PatientForm = (props) => {
     return (
         <div>
             <p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
+            <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
         </div>
     );
 }
