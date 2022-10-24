@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getFromAPI, postToAPI, updateToAPI } from "../../util/httpMethods";
-import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
+import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/constants";
 import Input from "../input/Input";
 import Submit from "../submit/Submit";
 import {
     skipField, isNotBlank, isValidEmail, isValidName,
     isValidSsn, isValidState, isValidZip, isPositive,
-    isInteger, isValidGender
+    isInteger
 } from "../../util/validation";
 
 const EncounterForm = (props) => {
@@ -18,19 +18,18 @@ const EncounterForm = (props) => {
 
     const defaultState = { value: '', error: false, errorMsg: '' };
 
-    const [firstName, setFirstName] = useState({ ...defaultState });
-    const [lastName, setLastName] = useState({ ...defaultState });
-    const [ssn, setSsn] = useState({ ...defaultState });
-    const [email, setEmail] = useState({ ...defaultState });
-    const [street, setStreet] = useState({ ...defaultState });
-    const [city, setCity] = useState({ ...defaultState });
-    const [state, setState] = useState({ ...defaultState });
-    const [postal, setPostal] = useState({ ...defaultState });
-    const [age, setAge] = useState({ ...defaultState });
-    const [height, setHeight] = useState({ ...defaultState });
-    const [weight, setWeight] = useState({ ...defaultState });
-    const [insurance, setInsurance] = useState({ ...defaultState });
-    const [gender, setGender] = useState({ ...defaultState });
+    const [notes, setNotes] = useState({ ...defaultState });
+    const [visitCode, setVisitCode] = useState({ ...defaultState });
+    const [provider, setProvider] = useState({ ...defaultState });
+    const [billingCode, setBillingCode] = useState({ ...defaultState });
+    const [icd10, setIcd10] = useState({ ...defaultState });
+    const [totalCost, setTotalCost] = useState({ ...defaultState });
+    const [copay, setCopay] = useState({ ...defaultState });
+    const [chiefComplaint, setChiefComplaint] = useState({ ...defaultState });
+    const [pulse, setPulse] = useState({ ...defaultState });
+    const [systolic, setSystolic] = useState({ ...defaultState });
+    const [diastolic, setDiastolic] = useState({ ...defaultState });
+    const [date, setDate] = useState({ ...defaultState });
 
     const handleChange = (event, object, stateHook) => {
         stateHook({ ...object, value: event.target.value, error: false, message: '' });
@@ -54,24 +53,23 @@ const EncounterForm = (props) => {
     }
 
     const loadFields = (data) => {
-        setFirstName({ ...firstName, value: data.firstName });
-        setLastName({ ...lastName, value: data.lastName });
-        setSsn({ ...ssn, value: data.ssn });
-        setEmail({ ...email, value: data.email });
-        setStreet({ ...street, value: data.street });
-        setCity({ ...city, value: data.city });
-        setState({ ...state, value: data.state });
-        setPostal({ ...postal, value: data.postal });
-        setAge({ ...age, value: data.age });
-        setHeight({ ...height, value: data.height });
-        setWeight({ ...weight, value: data.weight });
-        setInsurance({ ...insurance, value: data.insurance });
-        setGender({ ...gender, value: data.gender });
+        if (data.notes !== null) { setNotes({ ...notes, value: data.notes }) };
+        setVisitCode({ ...visitCode, value: data.visitCode });
+        setProvider({ ...provider, value: data.provider });
+        setBillingCode({ ...billingCode, value: data.billingCode });
+        setIcd10({ ...icd10, value: data.icd10 });
+        setTotalCost({ ...totalCost, value: data.totalCost });
+        setCopay({ ...copay, value: data.copay });
+        setChiefComplaint({ ...chiefComplaint, value: data.chiefComplaint });
+        if (data.pulse !== null) { setPulse({ ...pulse, value: data.pulse }) };
+        if (data.systolic !== null) { setSystolic({ ...systolic, value: data.systolic }) };
+        if (data.diastolic !== null) { setDiastolic({ ...diastolic, value: data.diastolic }) };
+        setDate({ ...date, value: data.date });
     }
 
     useEffect(() => {
         if (mode === 'edit') {
-            getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
+            getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.patientId + CONTEXT_ENCOUNTERS + "/" + param.id))
                 .then((data) => {
                     loadFields(data);
                 })
@@ -79,27 +77,26 @@ const EncounterForm = (props) => {
                     console.log(error);
                 });
         }
-    }, [param.id, mode]); // eslint-disable-line
+    }, [param.id, param.patientId, mode]); // eslint-disable-line
 
     const validateForm = () => {
         let isValid = true;
 
-        isValid = checkRequiredField(firstName, setFirstName, isValidName, isValid, 'First Name contains invalid characters');
-        isValid = checkRequiredField(lastName, setLastName, isValidName, isValid, 'Last Name contains invalid characters');
-        isValid = checkRequiredField(ssn, setSsn, isValidSsn, isValid, 'SSN must be in format XXX-XX-XXXX and cannot begin with 900-999');
-        isValid = checkRequiredField(email, setEmail, isValidEmail, isValid, 'Must be a valid email');
-        isValid = checkRequiredField(street, setStreet, skipField, isValid, '');
-        isValid = checkRequiredField(city, setCity, skipField, isValid, '');
-        isValid = checkRequiredField(state, setState, isValidState, isValid, 'Must be one of the 50 US states');
-        isValid = checkRequiredField(postal, setPostal, isValidZip, isValid, 'Zip code must have the format XXXXX or XXXXX-XXXX');
-        isValid = checkRequiredField(age, setAge, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(age, setAge, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(height, setHeight, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(height, setHeight, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(weight, setWeight, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(weight, setWeight, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(insurance, setInsurance, skipField, isValid, '');
-        isValid = checkRequiredField(gender, setGender, isValidGender, isValid, 'Valid genders are "Male", "Female", or "Other"');
+        isValid = checkRequiredField(notes, setNotes, isValidName, isValid, 'First Name contains invalid characters');
+        isValid = checkRequiredField(visitCode, setVisitCode, isValidName, isValid, 'Last Name contains invalid characters');
+        isValid = checkRequiredField(provider, setProvider, isValidSsn, isValid, 'SSN must be in format XXX-XX-XXXX and cannot begin with 900-999');
+        isValid = checkRequiredField(billingCode, setBillingCode, isValidEmail, isValid, 'Must be a valid email');
+        isValid = checkRequiredField(icd10, setIcd10, skipField, isValid, '');
+        isValid = checkRequiredField(totalCost, setTotalCost, skipField, isValid, '');
+        isValid = checkRequiredField(copay, setCopay, isValidState, isValid, 'Must be one of the 50 US states');
+        isValid = checkRequiredField(chiefComplaint, setChiefComplaint, isValidZip, isValid, 'Zip code must have the format XXXXX or XXXXX-XXXX');
+        isValid = checkRequiredField(pulse, setPulse, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(pulse, setPulse, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(systolic, setSystolic, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(systolic, setSystolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(diastolic, setDiastolic, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(diastolic, setDiastolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(date, setDate, skipField, isValid, '');
 
         return isValid;
     }
@@ -108,19 +105,18 @@ const EncounterForm = (props) => {
         event.preventDefault();
         if (validateForm()) {
             let form = {
-                firstName: firstName.value,
-                lastName: lastName.value,
-                ssn: ssn.value,
-                email: email.value,
-                street: street.value,
-                city: city.value,
-                state: state.value,
-                postal: postal.value,
-                age: age.value,
-                height: height.value,
-                weight: weight.value,
-                insurance: insurance.value,
-                gender: gender.value
+                firstName: notes.value,
+                lastName: visitCode.value,
+                ssn: provider.value,
+                email: billingCode.value,
+                street: icd10.value,
+                city: totalCost.value,
+                state: copay.value,
+                postal: chiefComplaint.value,
+                age: pulse.value,
+                height: systolic.value,
+                weight: diastolic.value,
+                insurance: date.value
             };
             switch (mode) {
                 case 'edit':
@@ -159,19 +155,18 @@ const EncounterForm = (props) => {
         <div>
             <p>Encounter Form. Patient ID = {param.patientId}. {mode === 'edit' ? `Encounter ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
             <form onSubmit={submitForm}>
-                <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
-                <Input type='text' label="Last Name:" obj={lastName} onChange={e => handleChange(e, lastName, setLastName)} />
-                <Input type='text' label="SSN:" obj={ssn} onChange={e => handleChange(e, ssn, setSsn)} />
-                <Input type='text' label="Email:" obj={email} onChange={e => handleChange(e, email, setEmail)} />
-                <Input type='text' label="Street:" obj={street} onChange={e => handleChange(e, street, setStreet)} />
-                <Input type='text' label="City:" obj={city} onChange={e => handleChange(e, city, setCity)} />
-                <Input type='text' label="State:" obj={state} onChange={e => handleChange(e, state, setState)} />
-                <Input type='text' label="ZIP:" obj={postal} onChange={e => handleChange(e, postal, setPostal)} />
-                <Input type='number' label="Age:" obj={age} onChange={e => handleChange(e, age, setAge)} />
-                <Input type='number' label="Height:" obj={height} onChange={e => handleChange(e, height, setHeight)} />
-                <Input type='number' label="Weight:" obj={weight} onChange={e => handleChange(e, weight, setWeight)} />
-                <Input type='text' label="Insurance:" obj={insurance} onChange={e => handleChange(e, insurance, setInsurance)} />
-                <Input type='text' label="Gender:" obj={gender} onChange={e => handleChange(e, gender, setGender)} />
+                <Input type='text' label="Notes:" obj={notes} onChange={e => handleChange(e, notes, setNotes)} />
+                <Input type='text' label="Visit Code:" obj={visitCode} onChange={e => handleChange(e, visitCode, setVisitCode)} />
+                <Input type='text' label="Provider:" obj={provider} onChange={e => handleChange(e, provider, setProvider)} />
+                <Input type='text' label="Billing Code:" obj={billingCode} onChange={e => handleChange(e, billingCode, setBillingCode)} />
+                <Input type='text' label="ICD10:" obj={icd10} onChange={e => handleChange(e, icd10, setIcd10)} />
+                <Input type='text' label="Total Cost:" obj={totalCost} onChange={e => handleChange(e, totalCost, setTotalCost)} />
+                <Input type='text' label="Co-pay:" obj={copay} onChange={e => handleChange(e, copay, setCopay)} />
+                <Input type='text' label="Chief Complaint:" obj={chiefComplaint} onChange={e => handleChange(e, chiefComplaint, setChiefComplaint)} />
+                <Input type='number' label="Pulse:" obj={pulse} onChange={e => handleChange(e, pulse, setPulse)} />
+                <Input type='number' label="Systolic Pressure:" obj={systolic} onChange={e => handleChange(e, systolic, setSystolic)} />
+                <Input type='number' label="Diastolic Pressure:" obj={diastolic} onChange={e => handleChange(e, diastolic, setDiastolic)} />
+                <Input type='text' label="Date:" obj={date} onChange={e => handleChange(e, date, setDate)} />
                 <Submit name={submitLabel} value={submitLabel} />
             </form>
         </div>
