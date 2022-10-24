@@ -5,9 +5,8 @@ import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/const
 import Input from "../input/Input";
 import Submit from "../submit/Submit";
 import {
-    skipField, isNotBlank, isValidEmail, isValidName,
-    isValidSsn, isValidState, isValidZip, isPositive,
-    isInteger
+    skipField, isNotBlank, isPositive, isInteger,
+    isValidVisitCode, isValidBillingCode, isValidIcd10, isValidDate
 } from "../../util/validation";
 
 const EncounterForm = (props) => {
@@ -52,6 +51,16 @@ const EncounterForm = (props) => {
         return isValid;
     }
 
+    const checkField = (field, hook, check, isValid, errorMsg) => {
+        if (field.value !== '') {
+            if (!check(field.value)) {
+                setError(field, hook, errorMsg);
+                return false;
+            }
+        }
+        return isValid;
+    }
+
     const loadFields = (data) => {
         if (data.notes !== null) { setNotes({ ...notes, value: data.notes }) };
         setVisitCode({ ...visitCode, value: data.visitCode });
@@ -81,6 +90,21 @@ const EncounterForm = (props) => {
 
     const validateForm = () => {
         let isValid = true;
+
+        isValid = checkRequiredField(visitCode, setVisitCode, isValidVisitCode, isValid, 'Must be LDL DLD (ex. A1S 2D3)');
+        isValid = checkRequiredField(provider, setProvider, skipField, isValid, '');
+        isValid = checkRequiredField(billingCode, setBillingCode, isValidBillingCode, isValid, 'Must be numbers in the form of (xxx.xxx.xxx-xx)');
+        isValid = checkRequiredField(icd10, setIcd10, isValidIcd10, isValid, 'Must be letter/digit/digit (ex. A12)');
+        isValid = checkRequiredField(totalCost, setTotalCost, isPositive, 'Must be a positive number');
+        isValid = checkRequiredField(copay, setCopay, isPositive, isValid, 'Must be a positive number');
+        isValid = checkRequiredField(chiefComplaint, setChiefComplaint, skipField, isValid, '');
+        isValid = checkField(pulse, setPulse, isInteger, isValid, 'Must be a positive number');
+        isValid = checkField(pulse, setPulse, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkField(systolic, setSystolic, isInteger, isValid, 'Must be a positive number');
+        isValid = checkField(systolic, setSystolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkField(diastolic, setDiastolic, isInteger, isValid, 'Must be a positive number');
+        isValid = checkField(diastolic, setDiastolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
+        isValid = checkRequiredField(date, setDate, isValidDate, isValid, 'Must be a valid date (yyyy-mm-dd)');
 
         return isValid;
     }

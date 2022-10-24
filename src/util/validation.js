@@ -60,7 +60,7 @@ export const isValidDate = (date) => {
  * @returns 
  */
 export const isPositive = (number) => {
-    return number > 0;
+    return number >= 0;
 }
 
 /**
