@@ -10,7 +10,7 @@ const PatientForm = (props) => {
     const param = useParams();
     const [patient, setPatient] = useState({});
 
-    const defaultState = { value: '', error: 'false', message: '' };
+    const defaultState = { value: '', error: 'false', errorMsg: '' };
 
     // and now it is time for a million useState hooks
     const [firstName, setFirstName] = useState({ ...defaultState });
@@ -47,7 +47,21 @@ const PatientForm = (props) => {
     return (
         <div>
             <p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
-            <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
+            <form>
+                <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
+                <Input type='text' label="Last Name:" obj={lastName} onChange={e => handleChange(e, lastName, setLastName)} />
+                <Input type='text' label="SSN:" obj={ssn} onChange={e => handleChange(e, ssn, setSsn)} />
+                <Input type='text' label="Email:" obj={email} onChange={e => handleChange(e, email, setEmail)} />
+                <Input type='text' label="Street:" obj={street} onChange={e => handleChange(e, street, setStreet)} />
+                <Input type='text' label="City:" obj={city} onChange={e => handleChange(e, city, setCity)} />
+                <Input type='text' label="State:" obj={state} onChange={e => handleChange(e, state, setState)} />
+                <Input type='text' label="ZIP:" obj={postal} onChange={e => handleChange(e, postal, setPostal)} />
+                <Input type='number' label="Age:" obj={age} onChange={e => handleChange(e, age, setAge)} />
+                <Input type='number' label="Height:" obj={height} onChange={e => handleChange(e, height, setHeight)} />
+                <Input type='number' label="Weight:" obj={weight} onChange={e => handleChange(e, weight, setWeight)} />
+                <Input type='text' label="Insurance:" obj={insurance} onChange={e => handleChange(e, insurance, setInsurance)} />
+                <Input type='text' label="Gender:" obj={gender} onChange={e => handleChange(e, gender, setGender)} />
+            </form>
         </div>
     );
 }
