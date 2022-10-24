@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const PatientList = (props) => {
 
     const [patients, setPatients] = useState([]);
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         getFromAPI((BASE_URL + CONTEXT_PATIENTS))
@@ -16,7 +17,7 @@ const PatientList = (props) => {
             .catch(error => {
                 console.log(error);
             });
-    }, []);
+    }, [refresh]);
 
     return (
         <div>
@@ -31,7 +32,7 @@ const PatientList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {patients.map(patient => <PatientListItem key={patient.id} patient={patient} />)}
+                    {patients.map(patient => <PatientListItem key={patient.id} patient={patient} refresh={refresh} setRefresh={setRefresh} />)}
                 </tbody>
             </table>
             <Link to={`${CONTEXT_PATIENTS}/create`}><button>Create Patient</button></Link>
