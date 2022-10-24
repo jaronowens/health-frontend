@@ -24,6 +24,18 @@ export const isValidGender = (gender) => {
     return (gender === 'Male' || gender === 'Female' || gender === 'Other');
 }
 
+export const isValidBillingCode = (billingCode) => {
+    return /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(billingCode);
+}
+
+export const isValidVisitCode = (visitCode) => {
+    return /^[A-Z][0-9][A-Z] [0-9][A-Z][0-9]$/.test(visitCode);
+}
+
+export const isValidIcd10 = (icd10) => {
+    return /^[A-Z][0-9][0-9]$/.test(icd10);
+}
+
 /**
  * tests if a string is a valid email (x@x.x)
  * @param {string} email 
@@ -34,16 +46,16 @@ export const isValidEmail = (email) => {
 }
 
 /**
- * tests if a string is a valid date (mm-dd-yyyy)
+ * tests if a string is a valid date (yyyy-mm-dd)
  * @param {string} date 
  * @returns - true or false
  */
 export const isValidDate = (date) => {
-    return /^(0[1-9]|1[012])[- .](0[1-9]|[12][0-9]|3[01])[- .](19|20)\d\d$/.test(date);
+    return /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.test(date);
 }
 
 /**
- * tests if a number is greated than zero
+ * tests if a number is greater than zero
  * @param {number} number 
  * @returns 
  */
@@ -58,15 +70,6 @@ export const isPositive = (number) => {
  */
 export const isInteger = (number) => {
     return Number.isInteger(Number(number));
-}
-
-/**
- * tests if a value is three characters or more
- * @param {*} value 
- * @returns 
- */
-export const isThreeCharacters = (value) => {
-    return /^.{3,}$/.test(value)
 }
 
 export const skipField = (value) => {
