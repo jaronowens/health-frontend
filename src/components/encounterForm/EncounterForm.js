@@ -82,22 +82,6 @@ const EncounterForm = (props) => {
     const validateForm = () => {
         let isValid = true;
 
-        isValid = checkRequiredField(notes, setNotes, isValidName, isValid, 'First Name contains invalid characters');
-        isValid = checkRequiredField(visitCode, setVisitCode, isValidName, isValid, 'Last Name contains invalid characters');
-        isValid = checkRequiredField(provider, setProvider, isValidSsn, isValid, 'SSN must be in format XXX-XX-XXXX and cannot begin with 900-999');
-        isValid = checkRequiredField(billingCode, setBillingCode, isValidEmail, isValid, 'Must be a valid email');
-        isValid = checkRequiredField(icd10, setIcd10, skipField, isValid, '');
-        isValid = checkRequiredField(totalCost, setTotalCost, skipField, isValid, '');
-        isValid = checkRequiredField(copay, setCopay, isValidState, isValid, 'Must be one of the 50 US states');
-        isValid = checkRequiredField(chiefComplaint, setChiefComplaint, isValidZip, isValid, 'Zip code must have the format XXXXX or XXXXX-XXXX');
-        isValid = checkRequiredField(pulse, setPulse, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(pulse, setPulse, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(systolic, setSystolic, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(systolic, setSystolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(diastolic, setDiastolic, isPositive, isValid, 'Must be a positive number');
-        isValid = checkRequiredField(diastolic, setDiastolic, isInteger, isValid, 'Must be rounded to the nearest whole number');
-        isValid = checkRequiredField(date, setDate, skipField, isValid, '');
-
         return isValid;
     }
 
@@ -105,26 +89,27 @@ const EncounterForm = (props) => {
         event.preventDefault();
         if (validateForm()) {
             let form = {
-                firstName: notes.value,
-                lastName: visitCode.value,
-                ssn: provider.value,
-                email: billingCode.value,
-                street: icd10.value,
-                city: totalCost.value,
-                state: copay.value,
-                postal: chiefComplaint.value,
-                age: pulse.value,
-                height: systolic.value,
-                weight: diastolic.value,
-                insurance: date.value
+                patientId: param.patientId,
+                notes: notes.value,
+                visitCode: visitCode.value,
+                provider: provider.value,
+                billingCode: billingCode.value,
+                icd10: icd10.value,
+                totalCost: totalCost.value,
+                copay: copay.value,
+                chiefComplaint: chiefComplaint.value,
+                pulse: pulse.value,
+                systolic: systolic.value,
+                diastolic: diastolic.value,
+                date: date.value
             };
             switch (mode) {
                 case 'edit':
                     form = { ...form, id: param.id };
-                    updateToAPI(form, (BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
+                    updateToAPI(form, (BASE_URL + CONTEXT_PATIENTS + "/" + param.patientId + CONTEXT_ENCOUNTERS + "/" + param.id))
                         .then((response) => {
                             if (response.ok) {
-                                navigate('..' + CONTEXT_PATIENTS + '/' + param.id);
+                                navigate('..' + CONTEXT_PATIENTS + '/' + param.patientId);
                             }
                         })
                         .catch(error => {
@@ -132,10 +117,10 @@ const EncounterForm = (props) => {
                         });
                     break;
                 case 'create':
-                    postToAPI(form, (BASE_URL + CONTEXT_PATIENTS))
+                    postToAPI(form, (BASE_URL + CONTEXT_PATIENTS + "/" + param.patientId + CONTEXT_ENCOUNTERS))
                         .then((response) => {
                             if (response.ok) {
-                                navigate('/');
+                                navigate('..' + CONTEXT_PATIENTS + '/' + param.patientId);
                             }
                         })
                         .catch(error => {
