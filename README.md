@@ -5,7 +5,7 @@
 A front-end React application for Super Health LLC, small regional healthcare company that operates a series of clinics.
 As this application is built as a proof of concept, it allows any user to review, create and update patient information and encounters.
 
-This application is designed to access the Health Project API, which can be accessed [https://gitlab.com/mtc-coc-se/apr-2022-cohort/jaron-owens/final-project/final-health-project-backend](here).
+This application is designed to access the Health Project API, which can be accessed [here](https://gitlab.com/mtc-coc-se/apr-2022-cohort/jaron-owens/final-project/final-health-project-backend).
 
 ## Pre-requisites
 
