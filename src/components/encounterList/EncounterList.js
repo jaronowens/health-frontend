@@ -3,6 +3,7 @@ import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/constants";
 import { Link } from "react-router-dom";
 import EncounterListItem from "./EncounterListItem";
+import styles from "../patientList/PatientList.module.css"
 
 const EncounterList = (props) => {
 
@@ -21,7 +22,7 @@ const EncounterList = (props) => {
 
     return (
         <div>
-            <table>
+            <table className={styles.listContainer}>
                 <thead>
                     <tr>
                         <th>Encounter ID</th>

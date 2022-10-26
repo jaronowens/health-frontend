@@ -1,0 +1,23 @@
+.container {
+    width: 95%;
+    max-width: 1200px;
+    min-height: 300px;
+    background-color: #FFF;
+    margin: 0 auto;
+    margin-top: 35px;
+    border: 1px solid #000;
+    box-shadow: 3px 3px 5px #111;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+
+  .serverError {
+    text-align: center;
+    color: red;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    width: 100%;
+}

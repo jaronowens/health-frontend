@@ -5,10 +5,11 @@ import EncounterDetails from '../encounterDetails/encounterDetails';
 import EncounterForm from '../encounterForm/EncounterForm';
 import PatientDetails from '../patientDetails/PatientDetails';
 import PatientList from '../patientList/PatientList';
+import styles from './App.module.css';
 
 function App() {
   return (
-    <div>
+    <div className={styles.container}>
       <Routes>
         <Route path="/" element={<PatientList />}/>
         <Route path={`${CONTEXT_PATIENTS}/:id`} element={<PatientDetails />} />

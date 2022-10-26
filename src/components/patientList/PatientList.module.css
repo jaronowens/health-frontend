@@ -1,0 +1,44 @@
+/* Based on https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy */
+
+.listContainer {
+    border: 1px solid #000;
+    margin: 1em auto;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: large;
+    text-align: center;
+}
+
+.listContainer td, .listContainer th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.listContainer tr:nth-child(even){background-color: #f2f2f2;}
+
+.listContainer > thead {
+    overflow: hidden;
+    background-color: #333;
+    color: #FFF;
+}
+
+.listContainer td button {
+    font-size: large;
+    width: 100%;
+}
+
+.create {
+    background-color: #04AA6D;
+    font-size: larger;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.create:hover {
+    opacity: 1;
+}
