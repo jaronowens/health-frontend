@@ -31,8 +31,7 @@ const EncounterList = (props) => {
                         <th>Visit Code</th>
                         <th>Provider</th>
                         <th>Date</th>
-                        <th></th>
-                        <th></th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>

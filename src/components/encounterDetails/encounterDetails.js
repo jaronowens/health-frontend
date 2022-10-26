@@ -22,11 +22,11 @@ const EncounterDetails = (props) => {
     return (
         <div>
             <h2>View Encounter: {encounter.id}</h2>
+            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}`}>
+                <h4>Back to Patient</h4>
+            </Link>
             <Link to={`${CONTEXT_PATIENTS}/${param.patientId}${CONTEXT_ENCOUNTERS}/${param.id}/edit`}>
                 <FormButton>Edit Encounter</FormButton>
-            </Link>
-            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}`}>
-                Back to Patient
             </Link>
             <p>ID: {encounter.id}</p>
             <p>Notes: {encounter.notes}</p>

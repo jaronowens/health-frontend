@@ -36,8 +36,8 @@ const PatientList = (props) => {
                         <th>Name</th>
                         <th>Age</th>
                         <th>Gender</th>
-                        <th></th>
-                        <th></th>
+                        <th>Details</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>

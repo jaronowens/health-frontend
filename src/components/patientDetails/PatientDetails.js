@@ -9,7 +9,7 @@ const PatientDetails = (props) => {
 
     const param = useParams();
     const [patient, setPatient] = useState({});
-
+    
     useEffect(() => {
         getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
             .then((data) => {
@@ -23,8 +23,8 @@ const PatientDetails = (props) => {
         <div>
             <h2>Patient Record: {patient.lastName}, {patient.firstName}</h2>
             <h4>Patient ID: {patient.id}</h4>
+            <Link to="/"><h4>Back to Patient List</h4></Link>
             <Link to="edit"><FormButton>Edit Patient Details</FormButton></Link>
-            <Link to="/"><button>Back to Patient List</button></Link>
             <p>SSN: {patient.ssn}</p>
             <p>Email: {patient.email}</p>
             <p>Address: {patient.street}</p>
