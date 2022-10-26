@@ -1,26 +1,32 @@
 /* Based on https://www.w3schools.com/howto/howto_css_register_form.asp*/
 
 input {
-    font-size: 14pt;
+    font-size: 12pt;
     margin: 10px;
 }
 
+label {
+    margin-left: 10px;
+}
+
 .noerror {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
+    width: 98%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
     display: inline-block;
     border: none;
     background: #f1f1f1;
+    overflow-x: hidden;
 }
 
 .error {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
+    width: 98%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
     display: inline-block;
     border: none;
     background: #eed9d9;
+    overflow-x: hidden;
 }
 
 .noerror:focus, .error:focus {

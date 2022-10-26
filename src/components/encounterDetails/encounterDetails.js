@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/constants";
+import FormButton from "../formButton/FormButton";
 
 const EncounterDetails = (props) => {
 
@@ -18,8 +19,15 @@ const EncounterDetails = (props) => {
             });
     }, [param.patientId, param.id]);
 
-    return(
+    return (
         <div>
+            <h2>View Encounter: {encounter.id}</h2>
+            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}${CONTEXT_ENCOUNTERS}/${param.id}/edit`}>
+                <FormButton>Edit Encounter</FormButton>
+            </Link>
+            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}`}>
+                Back to Patient
+            </Link>
             <p>ID: {encounter.id}</p>
             <p>Notes: {encounter.notes}</p>
             <p>Visit Code: {encounter.visitCode}</p>
@@ -33,8 +41,6 @@ const EncounterDetails = (props) => {
             <p>Systolic Pressure: {encounter.systolic}</p>
             <p>Diastolic Pressure: {encounter.diastolic}</p>
             <p>Date: {encounter.date}</p>
-            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}${CONTEXT_ENCOUNTERS}/${param.id}/edit`}>Edit Encounter</Link>
-            <Link to={`${CONTEXT_PATIENTS}/${param.patientId}`}>Back to Patient</Link>
         </div>
     );
 }

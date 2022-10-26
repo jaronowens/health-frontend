@@ -34,6 +34,8 @@ const PatientForm = (props) => {
     const [gender, setGender] = useState({ ...defaultState });
     // end million useState hooks
 
+    const [name, setName] = useState('');
+
     const handleChange = (event, object, stateHook) => {
         stateHook({ ...object, value: event.target.value, error: false, message: '' });
     }
@@ -69,6 +71,7 @@ const PatientForm = (props) => {
         setWeight({ ...weight, value: data.weight });
         setInsurance({ ...insurance, value: data.insurance });
         setGender({ ...gender, value: data.gender });
+        setName(`${data.lastName}, ${data.firstName}`);
     }
 
     useEffect(() => {
@@ -158,7 +161,7 @@ const PatientForm = (props) => {
 
     return (
         <div>
-            <p>Patient Form. {mode === 'edit' ? `Patient ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
+            <h2>{mode === 'edit' ? `Edit Patient:  ${name}` : 'Create Patient'}</h2>
             <form onSubmit={submitForm}>
                 <Input type='text' label="First Name:" obj={firstName} onChange={e => handleChange(e, firstName, setFirstName)} />
                 <Input type='text' label="Last Name:" obj={lastName} onChange={e => handleChange(e, lastName, setLastName)} />

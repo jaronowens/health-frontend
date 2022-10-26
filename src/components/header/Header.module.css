@@ -1,0 +1,12 @@
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+    list-style-type: none;
+}
+
+.topnav h1.title, h3.title {
+    font-weight: bold;
+    font-style: italic;
+    background-color: initial;
+    color: #f2f2f2;
+}

@@ -4,6 +4,7 @@ import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/const
 import { Link } from "react-router-dom";
 import EncounterListItem from "./EncounterListItem";
 import styles from "../patientList/PatientList.module.css"
+import FormButton from "../formButton/FormButton";
 
 const EncounterList = (props) => {
 
@@ -22,6 +23,7 @@ const EncounterList = (props) => {
 
     return (
         <div>
+            <h2>Encounters</h2>
             <table className={styles.listContainer}>
                 <thead>
                     <tr>
@@ -37,7 +39,9 @@ const EncounterList = (props) => {
                     {encounters.map(encounter => <EncounterListItem key={encounter.id} encounter={encounter} />)}
                 </tbody>
             </table>
-            <Link to={`${CONTEXT_PATIENTS}/${patientId}${CONTEXT_ENCOUNTERS}/create`}><button>Create Encounter</button></Link>
+            <Link to={`${CONTEXT_PATIENTS}/${patientId}${CONTEXT_ENCOUNTERS}/create`}>
+                <FormButton>Create Encounter</FormButton>
+            </Link>
         </div>
     );
 }

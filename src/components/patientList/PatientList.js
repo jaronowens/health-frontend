@@ -4,6 +4,7 @@ import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
 import PatientListItem from "./PatientListItem";
 import { Link } from "react-router-dom";
 import styles from "./PatientList.module.css";
+import FormButton from "../formButton/FormButton";
 
 /**
  * @name PatientList
@@ -28,6 +29,7 @@ const PatientList = (props) => {
 
     return (
         <div>
+            <h2>Patients</h2>
             <table className={styles.listContainer}>
                 <thead>
                     <tr>
@@ -43,7 +45,7 @@ const PatientList = (props) => {
                 </tbody>
             </table>
             <Link to={`${CONTEXT_PATIENTS}/create`}>
-                <button className={styles.create}>Create Patient</button>
+                <FormButton>Create Patient</FormButton>
             </Link>
         </div>
     );

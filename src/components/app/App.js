@@ -6,10 +6,12 @@ import EncounterForm from '../encounterForm/EncounterForm';
 import PatientDetails from '../patientDetails/PatientDetails';
 import PatientList from '../patientList/PatientList';
 import styles from './App.module.css';
+import Header from '../header/Header';
 
 function App() {
   return (
     <div className={styles.container}>
+      <Header align="right">Super Health, LLC</Header>
       <Routes>
         <Route path="/" element={<PatientList />}/>
         <Route path={`${CONTEXT_PATIENTS}/:id`} element={<PatientDetails />} />

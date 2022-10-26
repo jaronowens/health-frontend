@@ -1,0 +1,15 @@
+.create {
+    background-color: #04AA6D;
+    font-size: larger;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.create:hover {
+    opacity: 1;
+}

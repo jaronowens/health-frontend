@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
 import EncounterList from "../encounterList/EncounterList";
+import FormButton from "../formButton/FormButton";
 
 const PatientDetails = (props) => {
 
@@ -20,23 +21,20 @@ const PatientDetails = (props) => {
     }, [param.id]);
     return (
         <div>
-        <p>Patient ID: {patient.id}</p>
-        <p>First Name: {patient.firstName}</p>
-        <p>Last Name: {patient.lastName}</p>
-        <p>SSN: {patient.ssn}</p>
-        <p>Email: {patient.email}</p>
-        <p>Street: {patient.street}</p>
-        <p>City: {patient.city}</p>
-        <p>State: {patient.state}</p>
-        <p>ZIP: {patient.postal}</p>
-        <p>Age: {patient.age}</p>
-        <p>Height: {patient.height}</p>
-        <p>Weight: {patient.weight}</p>
-        <p>Insurance: {patient.insurance}</p>
-        <p>Gender: {patient.gender}</p>
-        <EncounterList patientId={param.id} />
-        <Link to="edit">Edit Patient Details</Link>
-        <Link to="/">Back to Patient List</Link>
+            <h2>Patient Record: {patient.lastName}, {patient.firstName}</h2>
+            <h4>Patient ID: {patient.id}</h4>
+            <Link to="edit"><FormButton>Edit Patient Details</FormButton></Link>
+            <Link to="/"><button>Back to Patient List</button></Link>
+            <p>SSN: {patient.ssn}</p>
+            <p>Email: {patient.email}</p>
+            <p>Address: {patient.street}</p>
+            <p>{patient.city}, {patient.state} {patient.postal}</p>
+            <p>Age: {patient.age}</p>
+            <p>Height: {patient.height}</p>
+            <p>Weight: {patient.weight}</p>
+            <p>Insurance: {patient.insurance}</p>
+            <p>Gender: {patient.gender}</p>
+            <EncounterList patientId={param.id} />
         </div>
     );
 }

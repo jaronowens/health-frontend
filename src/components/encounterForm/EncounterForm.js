@@ -162,7 +162,7 @@ const EncounterForm = (props) => {
 
     return (
         <div>
-            <p>Encounter Form. Patient ID = {param.patientId}. {mode === 'edit' ? `Encounter ID = ${param.id}.` : <></>} Currently in {mode} mode.</p>
+            <h2>{mode === 'edit' ? `Edit Encounter for Patient:  ${param.patientId}` : 'Create Encounter'}</h2>
             <form onSubmit={submitForm}>
                 <Input type='text' label="Notes:" obj={notes} onChange={e => handleChange(e, notes, setNotes)} />
                 <Input type='text' label="Visit Code:" obj={visitCode} onChange={e => handleChange(e, visitCode, setVisitCode)} />
