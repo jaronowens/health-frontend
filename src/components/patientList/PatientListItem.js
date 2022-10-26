@@ -4,9 +4,10 @@ import { deleteFromAPI } from "../../util/httpMethods";
 
 const PatientListItem = (props) => {
 
-    const { patient, refresh, setRefresh } = props;
+    const { patient, refresh, setRefresh, setServerError } = props;
 
     const onDelete = () => {
+        setServerError(false);
         deleteFromAPI((BASE_URL + CONTEXT_PATIENTS + '/' + patient.id))
             .then((response => {
                 if (response.status === 409) {
@@ -18,7 +19,7 @@ const PatientListItem = (props) => {
                 }
             }))
             .catch(error => {
-                console.log(error);
+                setServerError(true);
             });
     }
 

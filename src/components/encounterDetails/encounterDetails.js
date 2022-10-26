@@ -7,18 +7,21 @@ import styles from "../patientDetails/PatientDetails.module.css";
 
 const EncounterDetails = (props) => {
 
+    const {setServerError} = props;
+
     const param = useParams();
     const [encounter, setEncounter] = useState({});
 
     useEffect(() => {
+        setServerError(false);
         getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.patientId + CONTEXT_ENCOUNTERS + "/" + param.id))
             .then((data) => {
                 setEncounter(data);
             })
             .catch(error => {
-                console.log(error);
+                setServerError(true);
             });
-    }, [param.patientId, param.id]);
+    }, [param.patientId, param.id]); //eslint-disable-line
 
     return (
         <div className={styles.data}>

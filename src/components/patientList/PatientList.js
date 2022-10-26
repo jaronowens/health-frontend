@@ -13,19 +13,21 @@ import FormButton from "../formButton/FormButton";
  * @returns a table of patients.
  */
 const PatientList = (props) => {
+    const { setServerError } = props;
 
     const [patients, setPatients] = useState([]);
     const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
+        setServerError(false);
         getFromAPI((BASE_URL + CONTEXT_PATIENTS))
             .then((data) => {
                 setPatients(data);
             })
             .catch(error => {
-                console.log(error);
+                setServerError(true);
             });
-    }, [refresh]);
+    }, [refresh]); // eslint-disable-line
 
     return (
         <div>
@@ -41,7 +43,13 @@ const PatientList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {patients.map(patient => <PatientListItem key={patient.id} patient={patient} refresh={refresh} setRefresh={setRefresh} />)}
+                    {patients.map(patient => 
+                    <PatientListItem 
+                    key={patient.id} 
+                    patient={patient} 
+                    refresh={refresh} 
+                    setRefresh={setRefresh} 
+                    setServerError={setServerError} />)}
                 </tbody>
             </table>
             <Link to={`${CONTEXT_PATIENTS}/create`}>

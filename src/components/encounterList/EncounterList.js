@@ -8,18 +8,19 @@ import FormButton from "../formButton/FormButton";
 
 const EncounterList = (props) => {
 
-    const { patientId } = props;
+    const { patientId, setServerError } = props;
     const [encounters, setEncounters] = useState([]);
 
     useEffect(() => {
+        setServerError(false);
         getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + patientId + CONTEXT_ENCOUNTERS))
             .then((data) => {
                 setEncounters(data);
             })
             .catch(error => {
-                console.log(error);
+                setServerError(true);
             });
-    }, [patientId]);
+    }, [patientId]); //eslint-disable-line
 
     return (
         <div>

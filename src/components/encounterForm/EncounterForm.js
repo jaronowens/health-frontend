@@ -10,7 +10,7 @@ import {
 } from "../../util/validation";
 
 const EncounterForm = (props) => {
-    const { mode } = props;
+    const { mode, setServerError } = props;
 
     const param = useParams();
     const navigate = useNavigate();
@@ -78,12 +78,13 @@ const EncounterForm = (props) => {
 
     useEffect(() => {
         if (mode === 'edit') {
+            setServerError(false);
             getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.patientId + CONTEXT_ENCOUNTERS + "/" + param.id))
                 .then((data) => {
                     loadFields(data);
                 })
                 .catch(error => {
-                    console.log(error);
+                    setServerError(true);
                 });
         }
     }, [param.id, param.patientId, mode]); // eslint-disable-line
@@ -127,6 +128,7 @@ const EncounterForm = (props) => {
                 diastolic: diastolic.value,
                 date: date.value
             };
+            setServerError(false);
             switch (mode) {
                 case 'edit':
                     form = { ...form, id: param.id };
@@ -137,7 +139,7 @@ const EncounterForm = (props) => {
                             }
                         })
                         .catch(error => {
-                            console.log(error);
+                            setServerError(true);
                         });
                     break;
                 case 'create':
@@ -148,7 +150,7 @@ const EncounterForm = (props) => {
                             }
                         })
                         .catch(error => {
-                            console.log(error);
+                            setServerError(true);
                         });
                     break;
                 default:

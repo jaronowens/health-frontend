@@ -11,7 +11,7 @@ import {
 } from "../../util/validation";
 
 const PatientForm = (props) => {
-    const { mode } = props;
+    const { mode, setServerError } = props;
 
     const param = useParams();
     const navigate = useNavigate();
@@ -76,12 +76,13 @@ const PatientForm = (props) => {
 
     useEffect(() => {
         if (mode === 'edit') {
+            setServerError(false);
             getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
                 .then((data) => {
                     loadFields(data);
                 })
                 .catch(error => {
-                    console.log(error);
+                    setServerError(true);
                 });
         }
     }, [param.id, mode]); // eslint-disable-line
@@ -127,6 +128,7 @@ const PatientForm = (props) => {
                 insurance: insurance.value,
                 gender: gender.value
             };
+            setServerError(false);
             switch (mode) {
                 case 'edit':
                     form = { ...form, id: param.id };
@@ -137,7 +139,7 @@ const PatientForm = (props) => {
                             }
                         })
                         .catch(error => {
-                            console.log(error);
+                            setServerError(true);
                         });
                     break;
                 case 'create':
@@ -148,7 +150,7 @@ const PatientForm = (props) => {
                             }
                         })
                         .catch(error => {
-                            console.log(error);
+                            setServerError(true);
                         });
                     break;
                 default:

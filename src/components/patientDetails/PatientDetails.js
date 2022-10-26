@@ -7,19 +7,21 @@ import FormButton from "../formButton/FormButton";
 import styles from "./PatientDetails.module.css";
 
 const PatientDetails = (props) => {
+    const { setServerError } = props;
 
     const param = useParams();
     const [patient, setPatient] = useState({});
     
     useEffect(() => {
+        setServerError(false);
         getFromAPI((BASE_URL + CONTEXT_PATIENTS + "/" + param.id))
             .then((data) => {
                 setPatient(data);
             })
             .catch(error => {
-                console.log(error);
+                setServerError(true);
             });
-    }, [param.id]);
+    }, [param.id]); //eslint-disable-line
     return (
         <div className={styles.data}>
             <h2>Patient Record: {patient.lastName}, {patient.firstName}</h2>
@@ -35,7 +37,7 @@ const PatientDetails = (props) => {
             <p><b>Weight:</b> {patient.weight}</p>
             <p><b>Insurance:</b> {patient.insurance}</p>
             <p><b>Gender:</b> {patient.gender}</p>
-            <EncounterList patientId={param.id} />
+            <EncounterList patientId={param.id} setServerError={setServerError} />
         </div>
     );
 }
