@@ -4,7 +4,7 @@
  * @returns - the response from the API.
  * @throws - An error if the fetch request failed
  */
- const getFromAPI = async (endpoint) => {
+const getFromAPI = async (endpoint) => {
     const myHeaders = new Headers();
 
     const requestOptions = {

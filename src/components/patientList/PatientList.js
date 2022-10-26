@@ -43,13 +43,13 @@ const PatientList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {patients.map(patient => 
-                    <PatientListItem 
-                    key={patient.id} 
-                    patient={patient} 
-                    refresh={refresh} 
-                    setRefresh={setRefresh} 
-                    setServerError={setServerError} />)}
+                    {patients.map(patient =>
+                        <PatientListItem
+                            key={patient.id}
+                            patient={patient}
+                            refresh={refresh}
+                            setRefresh={setRefresh}
+                            setServerError={setServerError} />)}
                 </tbody>
             </table>
             <Link to={`${CONTEXT_PATIENTS}/create`}>

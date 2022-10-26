@@ -9,6 +9,11 @@ import {
     isValidVisitCode, isValidBillingCode, isValidIcd10, isValidDate
 } from "../../util/validation";
 
+/**
+ * Form for creating or editing Encounter data. 
+ * @param {*} mode - Sets the form to either 'create' or 'edit' mode, which changes the behavior of the form.
+ * @returns a form that lists all required fields (and loads an existing object from the server if in 'edit' mode).
+ */
 const EncounterForm = (props) => {
     const { mode, setServerError } = props;
 
@@ -30,14 +35,35 @@ const EncounterForm = (props) => {
     const [diastolic, setDiastolic] = useState({ ...defaultState });
     const [date, setDate] = useState({ ...defaultState });
 
+    /**
+     * Event handler for controlled input changes.
+     * @param {Event} event - the event that triggered the handler
+     * @param {object} object - the field to manipulate
+     * @param {function} stateHook - the useState hook to change the value of the field
+     */
     const handleChange = (event, object, stateHook) => {
         stateHook({ ...object, value: event.target.value, error: false, message: '' });
     }
 
+    /**
+     * Sets an error message in the designated field
+     * @param {object} field - the field to set
+     * @param {function} hook - the useState hook to change the field's value
+     * @param {string} message - the error message to display
+     */
     const setError = (field, hook, message) => {
         hook({ ...field, error: true, errorMsg: message });
     }
 
+    /**
+     * Checks required fields to first make sure they are not blank, and then performs a follow-up validation check
+     * @param {object} field - the field to set
+     * @param {function} hook - the useState hook to change the field's value
+     * @param {function} check - the validation check to complete
+     * @param {boolean} isValid - the current state of all previous validation checks
+     * @param {string} errorMsg - the message to set if the validation check fails
+     * @returns true if the tests pass, false otherwise
+     */
     const checkRequiredField = (field, hook, check, isValid, errorMsg) => {
         if (isNotBlank(field.value)) {
             if (!check(field.value)) {
@@ -51,6 +77,15 @@ const EncounterForm = (props) => {
         return isValid;
     }
 
+    /**
+     * Checks a field to ensure it passes a validation check
+     * @param {object} field - the field to set
+     * @param {function} hook - the useState hook to change the field's value
+     * @param {function} check - the validation check to complete
+     * @param {boolean} isValid - the current state of all previous validation checks
+     * @param {string} errorMsg - the message to set if the validation check fails
+     * @returns true if the tests pass, false otherwise
+     */
     const checkField = (field, hook, check, isValid, errorMsg) => {
         if (field.value !== '') {
             if (!check(field.value)) {
@@ -61,6 +96,10 @@ const EncounterForm = (props) => {
         return isValid;
     }
 
+    /**
+     * Loads data from the API into state variables.
+     * @param {object} data - an encounter object from the API
+     */
     const loadFields = (data) => {
         if (data.notes !== null) { setNotes({ ...notes, value: data.notes }) };
         setVisitCode({ ...visitCode, value: data.visitCode });
@@ -89,6 +128,10 @@ const EncounterForm = (props) => {
         }
     }, [param.id, param.patientId, mode]); // eslint-disable-line
 
+    /**
+     * Hub function that runs all required validation checks.
+     * @returns a boolean that represents hether or not all validation checks passed
+     */
     const validateForm = () => {
         let isValid = true;
 
@@ -110,6 +153,11 @@ const EncounterForm = (props) => {
         return isValid;
     }
 
+    /**
+     * Event handler function that striggers on form submission.
+     * Validates form, and if the validation passes, packages and submits to the API based on form mode.
+     * @param {Event} event 
+     */
     const submitForm = (event) => {
         event.preventDefault();
         if (validateForm()) {

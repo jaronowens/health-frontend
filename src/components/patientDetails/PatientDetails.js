@@ -6,6 +6,11 @@ import EncounterList from "../encounterList/EncounterList";
 import FormButton from "../formButton/FormButton";
 import styles from "./PatientDetails.module.css";
 
+/**
+ * @name PatientDetails
+ * @description Loads patient data from the API, then displays it on the page.
+ * @returns The requested patient data.
+ */
 const PatientDetails = (props) => {
     const { setServerError } = props;
 

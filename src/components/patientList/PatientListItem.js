@@ -2,10 +2,18 @@ import { Link } from "react-router-dom";
 import { BASE_URL, CONTEXT_PATIENTS } from "../../util/constants";
 import { deleteFromAPI } from "../../util/httpMethods";
 
+/**
+ * @name PatientListItem
+ *  @description An individual table row listing a patient
+ * @returns an individual patient entry, with a button to view more details
+ */
 const PatientListItem = (props) => {
 
     const { patient, refresh, setRefresh, setServerError } = props;
 
+    /**
+     * Event handler. Deletes the specified patient from the database.
+     */
     const onDelete = () => {
         setServerError(false);
         deleteFromAPI((BASE_URL + CONTEXT_PATIENTS + '/' + patient.id))

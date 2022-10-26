@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/constants";
 
+/**
+ * @name EncounterListItem
+ *  @description An individual table row listing an encounter
+ * @returns an individual encounter entry, with a button to view more details
+ */
 const EncounterListItem = (props) => {
 
     const { encounter } = props;

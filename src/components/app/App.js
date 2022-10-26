@@ -9,6 +9,12 @@ import PatientList from '../patientList/PatientList';
 import styles from './App.module.css';
 import Header from '../header/Header';
 
+/**
+ * 
+ * @name App
+ * @description The container used for routing the application.
+ * @returns component
+ */
 function App() {
 
   /* Handles server error messaging. If a component needs to make an API call, it should be 
@@ -20,14 +26,14 @@ function App() {
       <Header align="right">Super Health, LLC</Header>
       {serverError && <h2 className={styles.serverError}>Oh no, something went wrong.</h2>}
       <Routes>
-        <Route path="/" element={<PatientList setServerError={setServerError}/>} />
-        <Route path={`${CONTEXT_PATIENTS}/:id`} element={<PatientDetails setServerError={setServerError}/>} />
-        <Route path={`${CONTEXT_PATIENTS}/create`} element={<PatientForm mode='create' setServerError={setServerError}/>} />
-        <Route path={`${CONTEXT_PATIENTS}/:id/edit`} element={<PatientForm mode='edit' setServerError={setServerError}/>} />
+        <Route path="/" element={<PatientList setServerError={setServerError} />} />
+        <Route path={`${CONTEXT_PATIENTS}/:id`} element={<PatientDetails setServerError={setServerError} />} />
+        <Route path={`${CONTEXT_PATIENTS}/create`} element={<PatientForm mode='create' setServerError={setServerError} />} />
+        <Route path={`${CONTEXT_PATIENTS}/:id/edit`} element={<PatientForm mode='edit' setServerError={setServerError} />} />
 
-        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/:id`} element={<EncounterDetails setServerError={setServerError}/>} />
-        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/create`} element={<EncounterForm mode='create' setServerErrorr={setServerError}/>} />
-        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/:id/edit`} element={<EncounterForm mode='edit' setServerError={setServerError}/>} />
+        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/:id`} element={<EncounterDetails setServerError={setServerError} />} />
+        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/create`} element={<EncounterForm mode='create' setServerErrorr={setServerError} />} />
+        <Route path={`${CONTEXT_PATIENTS}/:patientId${CONTEXT_ENCOUNTERS}/:id/edit`} element={<EncounterForm mode='edit' setServerError={setServerError} />} />
 
       </Routes>
     </div>

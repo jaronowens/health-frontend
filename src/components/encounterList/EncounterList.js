@@ -6,6 +6,11 @@ import EncounterListItem from "./EncounterListItem";
 import styles from "../patientList/PatientList.module.css"
 import FormButton from "../formButton/FormButton";
 
+/**
+ * @name EncounterList
+ * @description Creates a list of all encounters that match a certain patient
+ * @returns A table of all encounters that match a patient
+ */
 const EncounterList = (props) => {
 
     const { patientId, setServerError } = props;

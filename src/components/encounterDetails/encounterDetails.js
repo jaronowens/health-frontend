@@ -5,9 +5,14 @@ import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/const
 import FormButton from "../formButton/FormButton";
 import styles from "../patientDetails/PatientDetails.module.css";
 
+/**
+ * @name EncounterDetails
+ * @description Loads encounter data from the API, then displays it on the page.
+ * @returns The requested encounter data.
+ */
 const EncounterDetails = (props) => {
 
-    const {setServerError} = props;
+    const { setServerError } = props;
 
     const param = useParams();
     const [encounter, setEncounter] = useState({});
