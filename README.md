@@ -1,10 +1,39 @@
-# Getting Started with Create React App
+# Final Health Project Front End
+
+## Description
+
+A front-end React application for Super Health LLC, small regional healthcare company that operates a series of clinics.
+As this application is built as a proof of concept, it allows any user to review, create and update patient information and encounters.
+
+This application is designed to access the Health Project API, which can be accessed [https://gitlab.com/mtc-coc-se/apr-2022-cohort/jaron-owens/final-project/final-health-project-backend](here).
+
+## Pre-requisites
+
+* Run `npm install` in root folder to install dependencies.
+
+### Setting Up the API
+
+The API will be hosted on localhost:8080 and requires access to a Postgres database on port 5432.
+
+### Starting the API with Postgres
+* Ensure that your postgres database is available and configured with the following options:
+  * POSTGRES_USER=postgres
+  * POSTGRES_PASSWORD=root
+  * PORT=5432
+* The API will load a few examples of each entity (Patient, Encounter) into the database after the service starts up.
+
+### Running the API
+* Look Under src\main\java\edu\mtc\training for AppRunner.java.
+* If starting in Intellij right click AppRunner, then click run.
+* Can also be run subsequently by using the green play symbol in the top right corner.
+
+## Setting Up The Front-End Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+From the project directory, you can run:
 
 ### `npm start`
 
@@ -14,57 +43,44 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+## Linting and Testing
+
+In the root project folder, run `npm test`.
+In the console, you should see tests running and the output should include the following details:
+* A checklist of passing and failing tests for each file with a short description of the test.
+* A summary of the tests run:
+    * Test Suites
+    * Tests
+    * Time
+    * Snapshots
+* Other commands you can use to run all or some of the tests.
+
+### `npm run lint`
+
+Runs the linter script.
+If you are using VSCode, you can press Alt + Shift + F at any time you are reviewing code to automatically format it.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run with line coverage, 
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once the application is running, you can navigate to [http://localhost:3000](http://localhost:3000). Upon arriving at this site, you will land on the patients screen.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Using the Site
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Patients Screen
 
-### `npm run eject`
+![image](img/patients.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The Patients Screen shows an active list of all patients in the database. Click the green "Create" button at the bottom of the page to create a new patient. You can also view more details of an existing patient by clicking "View Details" next to their entry.\
+You can delete a patient from the database by clicking on the "Delete" button next to them. Please be advised that you can only delete patients that do not have any associated encounters. If you do, an error message will appear.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Patient Details Screen
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![image](img/patientdetails.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Clicking on a patient will bring up more details, as well as give you the option to edit their details. It will also load all encounters for that patient, which you can view in more detail, or create a new encounter for that patient.\
+Bringing up details on an encounter will allow you to edit it.

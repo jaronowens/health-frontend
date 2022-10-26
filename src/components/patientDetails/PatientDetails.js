@@ -30,7 +30,7 @@ const PatientDetails = (props) => {
     return (
         <div className={styles.data}>
             <h2>Patient Record: {patient.lastName}, {patient.firstName}</h2>
-            <h4>Patient ID: {patient.id}</h4>
+            <h3>Patient ID: {patient.id}</h3>
             <Link to="/"><h4>Back to Patient List</h4></Link>
             <Link to="edit"><FormButton>Edit Patient Details</FormButton></Link>
             <p><b>SSN:</b> {patient.ssn}</p>

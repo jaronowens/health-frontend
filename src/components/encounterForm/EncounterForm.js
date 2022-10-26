@@ -130,7 +130,7 @@ const EncounterForm = (props) => {
 
     /**
      * Hub function that runs all required validation checks.
-     * @returns a boolean that represents hether or not all validation checks passed
+     * @returns a boolean that represents whether or not all validation checks passed
      */
     const validateForm = () => {
         let isValid = true;
