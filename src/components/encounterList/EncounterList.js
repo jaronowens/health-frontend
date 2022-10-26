@@ -35,7 +35,11 @@ const EncounterList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {encounters.map(encounter => <EncounterListItem key={encounter.id} encounter={encounter} />)}
+                    {
+                        encounters.length !== 0 ?
+                            encounters.map(encounter => <EncounterListItem key={encounter.id} encounter={encounter} />)
+                            : <td colSpan='5'>There are no encounters associated with this patient.</td>
+                    }
                 </tbody>
             </table>
             <Link to={`${CONTEXT_PATIENTS}/${patientId}${CONTEXT_ENCOUNTERS}/create`}>

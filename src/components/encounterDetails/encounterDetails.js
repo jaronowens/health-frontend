@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getFromAPI } from "../../util/httpMethods";
 import { BASE_URL, CONTEXT_PATIENTS, CONTEXT_ENCOUNTERS } from "../../util/constants";
 import FormButton from "../formButton/FormButton";
+import styles from "../patientDetails/PatientDetails.module.css";
 
 const EncounterDetails = (props) => {
 
@@ -20,7 +21,7 @@ const EncounterDetails = (props) => {
     }, [param.patientId, param.id]);
 
     return (
-        <div>
+        <div className={styles.data}>
             <h2>View Encounter: {encounter.id}</h2>
             <Link to={`${CONTEXT_PATIENTS}/${param.patientId}`}>
                 <h4>Back to Patient</h4>
@@ -28,19 +29,18 @@ const EncounterDetails = (props) => {
             <Link to={`${CONTEXT_PATIENTS}/${param.patientId}${CONTEXT_ENCOUNTERS}/${param.id}/edit`}>
                 <FormButton>Edit Encounter</FormButton>
             </Link>
-            <p>ID: {encounter.id}</p>
-            <p>Notes: {encounter.notes}</p>
-            <p>Visit Code: {encounter.visitCode}</p>
-            <p>Provider: {encounter.provider}</p>
-            <p>Billing Code: {encounter.billingCode}</p>
-            <p>ICD10: {encounter.icd10}</p>
-            <p>Total Cost: {encounter.totalCost}</p>
-            <p>Co-pay: {encounter.copay}</p>
-            <p>Chief Complaint: {encounter.chiefComplaint}</p>
-            <p>:Pulse {encounter.pulse}</p>
-            <p>Systolic Pressure: {encounter.systolic}</p>
-            <p>Diastolic Pressure: {encounter.diastolic}</p>
-            <p>Date: {encounter.date}</p>
+            <p><b>Notes:</b> {encounter.notes}</p>
+            <p><b>Visit Code:</b> {encounter.visitCode}</p>
+            <p><b>Provider:</b> {encounter.provider}</p>
+            <p><b>Billing Code:</b> {encounter.billingCode}</p>
+            <p><b>ICD10:</b> {encounter.icd10}</p>
+            <p><b>Total Cost:</b> {encounter.totalCost}</p>
+            <p><b>Co-pay:</b> {encounter.copay}</p>
+            <p><b>Chief Complaint:</b> {encounter.chiefComplaint}</p>
+            <p><b>Pulse:</b> {encounter.pulse}</p>
+            <p><b>Systolic Pressure:</b> {encounter.systolic}</p>
+            <p><b>Diastolic Pressure:</b> {encounter.diastolic}</p>
+            <p><b>Date:</b> {encounter.date}</p>
         </div>
     );
 }
